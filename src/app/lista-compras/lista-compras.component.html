@@ -26,6 +26,10 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-plus-circle me-2"></i>Adicionar
                 </button>
+
+                <button type="button" class="btn btn-danger"(click)="limparLista()">
+                    <i class="bi bi-plus-circle me-2"></i>Limpar Lista
+                </button>
             </div>
         </form>
 
@@ -54,7 +58,7 @@
                                        (click)="riscarItem(elemento.id)"
                                        aria-label="Mark item as purchased">
                             </td>
-                            <td>
+                            <td class="text-center align-middle">
                                 <button class="btn btn-danger btn-sm"
                                         (click)="deleteItem(elemento.id)">
                                     <i class="bi bi-trash me-2"></i>Remover

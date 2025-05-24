@@ -72,4 +72,11 @@ export class ListaComprasComponent {
     this.total = this.lista.length;
   }
 
+
+  limparLista(){
+    this.lista = [];
+    this.item = "";
+    this.total = 0;
+  }
+
 }
