@@ -4,53 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="lista-compras.component.scss">
 </head>
 <body>
-    <div class="container">
-        <h1>Lista de Compras</h1>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Lista de Compras</h1>
 
-        <form #frm="ngForm" class="add-item-form" (ngSubmit)="adicionarItem()">
-            <input type="text" 
-            id="item"
-            name="item" 
-            [(ngModel)]="item" 
-            placeholder="Digite o nome do item" required>
-            <button type="submit" class="btn btn-success">Adicionar</button>
+        <!-- Form for adding items -->
+        <form #frm="ngForm" class="add-item-form mb-4" (ngSubmit)="addItem()">
+            <div class="input-group">
+                <input type="text"
+                       id="item"
+                       name="item"
+                       [(ngModel)]="item"
+                       class="form-control"
+                       placeholder="Digite o nome do item"
+                       required
+                       aria-label="Item name">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-plus-circle me-2"></i>Adicionar
+                </button>
+            </div>
         </form>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of lista_itens; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td [ngClass]="{'text-decoration-line-through': item.riscado}">
-                        {{ item.nome }}
-                    </td>
-                    <td>
-                        <input type="checkbox" class="form-check-input"
-                        (change)="riscarItem(i)"
-                        [checked]="item.riscado">
-                    </td>
-                    <td><button class="btn btn-delete btn-sm" (click)="removerItem(i)">Remover</button></td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div class="total-items">
-            <h3>
-                Total de Items: <span>{{ total }}</span>     
-            </h3>
+        <!-- Table for displaying items -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (elemento of lista; track elemento.id) {
+                        <tr class="table-row">
+                            <td>{{ elemento.id }}</td>
+                            <td [class.text-decoration-line-through]="elemento.comprado">
+                                {{ elemento.nome }}
+                            </td>
+                            <td>
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       [checked]="elemento.comprado"
+                                       (click)="riscarItem(elemento.id)"
+                                       aria-label="Mark item as purchased">
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm"
+                                        (click)="deleteItem(elemento.id)">
+                                    <i class="bi bi-trash me-2"></i>Remover
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
 
+        <!-- Total items display -->
+        <div class="total-items text-end mt-3">
+            <h4 class="fw-bold">
+                Total de Itens: <span class="badge bg-primary">{{ total }}</span>
+            </h4>
+        </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
